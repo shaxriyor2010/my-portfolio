@@ -10,26 +10,19 @@ import {
   FiExternalLink,
   FiGithub,
   FiEye,
+  FiInfo,
+  FiCheckCircle,
+  FiActivity,
   FiLayers,
-  FiArrowUpRight,
+  FiPlay,
 } from "react-icons/fi";
 
 export default function ProjectsSection() {
   const { t, language } = useLanguage();
-  const [activeCategory, setActiveCategory] = useState("all");
   const [selectedProject, setSelectedProject] = useState(null);
 
-  const categories = [
-    { id: "all", label: t.projects.filterAll },
-    { id: "nextjs", label: t.projects.filterNext },
-    { id: "react", label: t.projects.filterReact },
-    { id: "fullstack", label: t.projects.filterFullstack },
-  ];
-
-  const filteredProjects =
-    activeCategory === "all"
-      ? projects
-      : projects.filter((p) => p.category === activeCategory);
+  // Single or multiple projects
+  const mainProject = projects[0];
 
   return (
     <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 relative">
@@ -70,158 +63,188 @@ export default function ProjectsSection() {
           >
             {t.projects.subtitle}
           </motion.p>
-
-          {/* Filter Pills */}
-          <div className="flex justify-center flex-wrap gap-2 mt-8">
-            {categories.map((cat) => {
-              const isActive = activeCategory === cat.id;
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => setActiveCategory(cat.id)}
-                  className={`px-5 py-2 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer ${
-                    isActive
-                      ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-500/25 scale-105"
-                      : "bg-white/70 dark:bg-zinc-900/70 hover:bg-white dark:hover:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-200/80 dark:border-zinc-800 backdrop-blur-md"
-                  }`}
-                >
-                  {cat.label}
-                </button>
-              );
-            })}
-          </div>
         </div>
 
-        {/* Projects Cards Grid */}
-        <motion.div
-          layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
-        >
-          <AnimatePresence>
-            {filteredProjects.map((project, index) => {
-              const title = project.title[language] || project.title.uz;
-              const shortDesc =
-                project.shortDescription[language] ||
-                project.shortDescription.uz;
+        {/* Flagship Project Showcase */}
+        {mainProject && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="relative rounded-3xl bg-white/70 dark:bg-zinc-900/80 border border-zinc-200/80 dark:border-zinc-800 backdrop-blur-xl shadow-xl hover:shadow-2xl hover:border-indigo-500/40 dark:hover:border-indigo-500/40 transition-all duration-300 overflow-hidden"
+          >
+            {/* Top decorative gradient glow */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-indigo-500/10 via-cyan-500/10 to-transparent blur-3xl pointer-events-none" />
 
-              return (
-                <motion.div
-                  layout
-                  key={project.id}
-                  initial={{ opacity: 0, y: 25 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.35, delay: index * 0.05 }}
-                  whileHover={{ y: -8 }}
-                  className="group relative rounded-3xl bg-white/70 dark:bg-zinc-900/80 border border-zinc-200/80 dark:border-zinc-800 backdrop-blur-xl shadow-sm hover:shadow-2xl hover:shadow-indigo-500/10 hover:border-indigo-500/40 dark:hover:border-indigo-500/40 transition-all duration-300 flex flex-col justify-between overflow-hidden"
-                >
-                  {/* Top Thumbnail Preview Area with Mockup Chrome */}
-                  <div className="relative h-48 w-full overflow-hidden bg-zinc-950 flex flex-col">
-                    {/* Mockup browser bar */}
-                    <div className="w-full px-4 py-2.5 bg-zinc-900/90 border-b border-white/10 flex items-center justify-between z-10">
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
-                        <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
-                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
-                      </div>
-                      <span className="text-[10px] font-mono text-zinc-400 truncate max-w-[150px]">
-                        {project.id}.portfolio.uz
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
+              {/* Left Column: Visual Browser Mockup Preview */}
+              <div className="lg:col-span-6 bg-zinc-950 flex flex-col justify-between p-6 sm:p-8 relative overflow-hidden group">
+                {/* Browser top chrome */}
+                <div className="flex items-center justify-between pb-4 border-b border-white/10 relative z-10">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded-full bg-rose-500" />
+                    <span className="w-3 h-3 rounded-full bg-amber-400" />
+                    <span className="w-3 h-3 rounded-full bg-emerald-400" />
+                  </div>
+                  <div className="px-3 py-1 rounded-md bg-white/10 text-white/80 font-mono text-[11px] truncate max-w-[200px]">
+                    https://srm-sistema.vercel.app/
+                  </div>
+                  <div className="flex items-center gap-1 text-[11px] text-emerald-400 font-mono">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>Live</span>
+                  </div>
+                </div>
+
+                {/* Central Visual Showcase Banner */}
+                <div className="relative py-12 sm:py-16 flex flex-col items-center justify-center text-center z-10">
+                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-cyan-500 via-indigo-600 to-purple-600 p-[2px] shadow-2xl mb-4 group-hover:scale-105 transition-transform duration-300">
+                    <div className="w-full h-full rounded-[14px] bg-zinc-950 flex items-center justify-center text-white">
+                      <span className="text-3xl font-black bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+                        SRM
                       </span>
-                      <span className="w-2.5" />
                     </div>
+                  </div>
 
-                    {/* Gradient visual banner with zoom on hover */}
-                    <div
-                      className={`relative flex-1 bg-gradient-to-tr ${project.previewGradient} flex flex-col items-center justify-center p-6 transition-transform duration-500 group-hover:scale-105`}
-                    >
-                      <div className="absolute inset-0 bg-black/25 backdrop-blur-[2px]" />
+                  <h3 className="text-xl sm:text-2xl font-bold text-white tracking-wide">
+                    {mainProject.title[language] || mainProject.title.uz}
+                  </h3>
 
-                      {/* Mockup Graphic / Icon */}
-                      <div className="relative z-10 text-center">
-                        <span className="text-2xl font-black text-white tracking-wider uppercase opacity-90 drop-shadow-md">
-                          {project.title.en.split(" ")[0]}
-                        </span>
-                        <div className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/40 text-white/90 text-[11px] font-mono backdrop-blur-md">
-                          <span>{project.stats?.type || "Full App"}</span>
-                        </div>
-                      </div>
+                  <p className="mt-2 text-xs sm:text-sm text-zinc-400 max-w-sm font-mono">
+                    Students • Groups • Teachers • Payments • Leads
+                  </p>
 
-                      {/* Hover Overlay with Quick View button */}
-                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-20">
-                        <button
-                          onClick={() => setSelectedProject(project)}
-                          className="px-4 py-2 rounded-xl bg-white text-zinc-900 font-bold text-xs shadow-lg flex items-center gap-2 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 cursor-pointer"
+                  {/* Direct Launch Result Button on Banner */}
+                  <motion.a
+                    href={mainProject.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="mt-6 px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-cyan-500 hover:from-indigo-600 hover:to-cyan-600 text-white font-bold text-xs sm:text-sm shadow-lg shadow-indigo-500/30 flex items-center gap-2 cursor-pointer transition-all"
+                  >
+                    <FiPlay className="text-emerald-300 fill-emerald-300" size={14} />
+                    <span>{t.projects.viewProject}</span>
+                    <FiExternalLink size={14} />
+                  </motion.a>
+                </div>
+
+                {/* Bottom stats inside mockup */}
+                <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-zinc-400 relative z-10">
+                  <span className="flex items-center gap-1.5 text-emerald-400">
+                    <FiActivity size={14} />
+                    <span>Score: 99/100</span>
+                  </span>
+                  <span>React + Redux Toolkit</span>
+                </div>
+              </div>
+
+              {/* Right Column: Detailed Info, Features & Action Buttons */}
+              <div className="lg:col-span-6 p-6 sm:p-8 flex flex-col justify-between">
+                <div>
+                  {/* Category & Status Badges */}
+                  <div className="flex flex-wrap items-center gap-2 mb-4">
+                    <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+                      <span>{mainProject.stats.status}</span>
+                    </span>
+                    <span className="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
+                      {mainProject.stats.type}
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-white leading-tight">
+                    {mainProject.title[language] || mainProject.title.uz}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="mt-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                    {mainProject.shortDescription[language] || mainProject.shortDescription.uz}
+                  </p>
+
+                  {/* Key Highlights / Features */}
+                  <div className="mt-5 space-y-2">
+                    <span className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 flex items-center gap-1.5">
+                      <FiCheckCircle className="text-emerald-500" />
+                      <span>{t.projects.featuresTitle}</span>
+                    </span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+                      {(mainProject.features[language] || mainProject.features.uz).slice(0, 4).map((feat, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-start gap-2 p-2 rounded-xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200/60 dark:border-zinc-800 text-xs text-zinc-700 dark:text-zinc-300"
                         >
-                          <FiEye size={14} />
-                          <span>{t.projects.viewProject}</span>
-                        </button>
-                      </div>
+                          <span className="text-emerald-500 font-bold">•</span>
+                          <span>{feat}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
 
-                  {/* Card Content Area */}
-                  <div className="p-6 flex-1 flex flex-col justify-between">
-                    <div>
-                      {/* Tech Tags */}
-                      <div className="flex flex-wrap gap-1.5 mb-3">
-                        {project.tags.slice(0, 3).map((tag, i) => (
-                          <span
-                            key={i}
-                            className="px-2.5 py-0.5 rounded-md text-[11px] font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200/60 dark:border-zinc-700/50"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                        {project.tags.length > 3 && (
-                          <span className="px-2 py-0.5 rounded-md text-[10px] font-medium text-zinc-400">
-                            +{project.tags.length - 3}
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Title */}
-                      <h3 className="text-lg font-bold text-zinc-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-1">
-                        {title}
-                      </h3>
-
-                      {/* Short Description */}
-                      <p className="mt-2 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2 leading-relaxed">
-                        {shortDesc}
-                      </p>
-                    </div>
-
-                    {/* Card Actions Footer */}
-                    <div className="mt-6 pt-4 border-t border-zinc-200/70 dark:border-zinc-800 flex items-center justify-between">
-                      {/* "Ko'rish" (View) Button with click micro-interaction */}
-                      <motion.button
-                        whileTap={{ scale: 0.94 }}
-                        whileHover={{ scale: 1.03 }}
-                        onClick={() => setSelectedProject(project)}
-                        className="px-4 py-2 rounded-xl text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-500 shadow-md shadow-indigo-500/20 flex items-center gap-1.5 transition-colors cursor-pointer"
-                      >
-                        <span>{t.projects.viewProject}</span>
-                        <FiArrowUpRight size={14} />
-                      </motion.button>
-
-                      {/* GitHub Link Button */}
-                      <motion.a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        whileTap={{ scale: 0.92 }}
-                        whileHover={{ scale: 1.08 }}
-                        title="GitHub Repozitoriy"
-                        className="p-2 rounded-xl text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white bg-zinc-100/80 dark:bg-zinc-800/80 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
-                      >
-                        <FiGithub size={16} />
-                      </motion.a>
+                  {/* Tech Tags */}
+                  <div className="mt-5">
+                    <span className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 flex items-center gap-1.5 mb-2">
+                      <FiLayers className="text-indigo-500" />
+                      <span>{t.projects.techUsed}</span>
+                    </span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {mainProject.tags.map((tag, idx) => (
+                        <span
+                          key={idx}
+                          className="px-2.5 py-1 rounded-lg text-xs font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200/80 dark:border-zinc-700/60"
+                        >
+                          {tag}
+                        </span>
+                      ))}
                     </div>
                   </div>
-                </motion.div>
-              );
-            })}
-          </AnimatePresence>
-        </motion.div>
+                </div>
+
+                {/* Primary Action Buttons (Result, GitHub, Details) */}
+                <div className="mt-8 pt-6 border-t border-zinc-200/70 dark:border-zinc-800 flex flex-wrap items-center gap-3">
+                  {/* 1. Natijani Ko'rish (Open Live SRM System directly in new tab) */}
+                  <motion.a
+                    href={mainProject.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.03, y: -2 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="flex-1 min-w-[170px] px-5 py-3 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 shadow-lg shadow-indigo-500/25 flex items-center justify-center gap-2 cursor-pointer transition-all"
+                  >
+                    <span>{t.projects.viewProject}</span>
+                    <FiExternalLink size={15} />
+                  </motion.a>
+
+                  {/* 2. GitHub Kodlarini Olish (Open GitHub repo in new tab) */}
+                  <motion.a
+                    href={mainProject.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.03, y: -2 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="px-5 py-3 rounded-xl font-semibold text-xs sm:text-sm text-zinc-800 dark:text-zinc-100 bg-white dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 border border-zinc-200 dark:border-zinc-700 shadow-sm flex items-center justify-center gap-2 cursor-pointer transition-colors"
+                  >
+                    <FiGithub size={16} />
+                    <span>{t.projects.viewCode}</span>
+                  </motion.a>
+
+                  {/* 3. Batafsil Ma'lumot (Open Detailed Modal) */}
+                  <motion.button
+                    onClick={() => setSelectedProject(mainProject)}
+                    whileHover={{ scale: 1.03, y: -2 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="p-3 rounded-xl text-zinc-600 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 bg-zinc-100/80 dark:bg-zinc-800/80 hover:bg-zinc-200 dark:hover:bg-zinc-700 border border-zinc-200/80 dark:border-zinc-700/80 cursor-pointer transition-colors"
+                    title={t.projects.viewDetails}
+                    aria-label={t.projects.viewDetails}
+                  >
+                    <FiInfo size={18} />
+                  </motion.button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
       </div>
 
       {/* Interactive Project Details Modal */}
