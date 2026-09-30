@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 import LanguageSwitcher from "./LanguageSwitcher";
 import ThemeToggle from "./ThemeToggle";
-import { FiMenu, FiX, FiArrowUpRight, FiCode } from "react-icons/fi";
+import { FiMenu, FiX, FiArrowUpRight, FiCode, FiDownload } from "react-icons/fi";
 
 export default function Navbar() {
   const { t } = useLanguage();
@@ -130,6 +130,16 @@ export default function Navbar() {
 
           {/* Right Header Controls (Language, Theme, Mobile toggle) */}
           <div className="flex items-center gap-2 sm:gap-3">
+            <a
+              href="/Resumes2.pdf"
+              download="Shaxriyor_Usmonov_CV.pdf"
+              aria-label={t.hero.downloadCv}
+              title={t.hero.downloadCv}
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-3 py-2 text-sm font-semibold text-white shadow-md shadow-emerald-500/20 transition-colors hover:bg-emerald-500 sm:px-3.5"
+            >
+              <FiDownload size={16} />
+              <span className="hidden lg:inline">{t.hero.downloadCv}</span>
+            </a>
             <LanguageSwitcher />
             <ThemeToggle />
 
@@ -215,6 +225,15 @@ export default function Navbar() {
                     );
                   })}
                 </div>
+
+                <a
+                  href="/Resumes2.pdf"
+                  download="Shaxriyor_Usmonov_CV.pdf"
+                  className="mt-4 flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-3 text-sm font-semibold text-white shadow-md shadow-emerald-500/20 transition-colors hover:bg-emerald-500"
+                >
+                  <FiDownload size={16} />
+                  <span>{t.hero.downloadCv}</span>
+                </a>
               </div>
 
               {/* Drawer Bottom Controls */}

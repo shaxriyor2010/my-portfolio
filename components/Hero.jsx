@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 import {
   FiArrowRight,
+  FiDownload,
   FiMail,
 } from "react-icons/fi";
 import {
@@ -178,6 +179,18 @@ export default function Hero() {
             >
               <FiMail size={16} className="text-indigo-500" />
               <span>{t.hero.ctaContact}</span>
+            </motion.a>
+
+            {/* CV Download Button */}
+            <motion.a
+              href="/Resumes2.pdf"
+              download="Shaxriyor_Usmonov_CV.pdf"
+              whileHover={{ scale: 1.04, y: -2 }}
+              whileTap={{ scale: 0.96 }}
+              className="w-full sm:w-auto px-7 py-3.5 rounded-xl font-semibold text-sm text-white bg-emerald-600 hover:bg-emerald-500 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/35 flex items-center justify-center gap-2 transition-all cursor-pointer"
+            >
+              <FiDownload size={16} />
+              <span>{t.hero.downloadCv}</span>
             </motion.a>
           </motion.div>
 

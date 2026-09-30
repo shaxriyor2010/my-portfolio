@@ -23,7 +23,7 @@ export const translations = {
       description: "Zamonaviy, yuqori unumdorlikka ega va estetik jihatdan mukammal veb-ilovalarni yaratishga ixtisoslashgan dasturchi. Har bir detalga e'tibor va toza kod bilan g'oyalarni haqiqatga aylantiraman.",
       ctaProjects: "Loyihalarim",
       ctaContact: "Bog'lanish",
-      downloadCv: "Bog'lanish ma'lumotlari",
+      downloadCv: "CV yuklab olish",
       stats: {
         experience: "Yillik tajriba",
         projectsCount: "Bajarilgan loyihalar",
@@ -142,7 +142,7 @@ export const translations = {
       description: "Passionate developer specialized in building modern, performant, and visually stunning web applications. Turning ideas into pixel-perfect digital reality with clean and scalable code.",
       ctaProjects: "My Projects",
       ctaContact: "Contact Me",
-      downloadCv: "Contact Information",
+      downloadCv: "Download CV",
       stats: {
         experience: "Years Experience",
         projectsCount: "Completed Projects",
@@ -261,7 +261,7 @@ export const translations = {
       description: "Разработчик современных, высокопроизводительных и эстетичных веб-приложений. Воплощаю идеи в цифровую реальность с чистым кодом и вниманием к каждой детали.",
       ctaProjects: "Мои Проекты",
       ctaContact: "Связаться",
-      downloadCv: "Контактные данные",
+      downloadCv: "Скачать резюме",
       stats: {
         experience: "Лет опыта",
         projectsCount: "Завершенных проектов",
